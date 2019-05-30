@@ -7,7 +7,7 @@ ARG YQ_VERSION=2.4.0
 
 RUN \
 mkdir ~/.ssh \
-apt-get update \
+&& apt-get update \
 && apt-get install -y -qq --no-install-recommends \
     gpg-agent \
     autoconf \
@@ -35,7 +35,6 @@ apt-get update \
     libreadline-dev \
     libssl-dev \
     libcurl4-openssl-dev \
-
 && wget -nv -O /usr/bin/yq https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_386 \
 && chmod +x /usr/bin/yq \
 && curl -sL https://deb.nodesource.com/setup_10.x | bash - \
