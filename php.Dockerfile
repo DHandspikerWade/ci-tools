@@ -36,7 +36,6 @@ apt-get update \
   --with-zlib \
 && make clean \
 && make \
-&& make test \
 && make install \
 && cd / && rm -rf /tmp/php-${PHP_VERSION} \
 && php -r "print('hello' . PHP_EOL);"

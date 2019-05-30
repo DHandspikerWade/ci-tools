@@ -24,8 +24,16 @@ build_base:
   <<: *build_template
   stage: base
   variables:
+    EXTRA_OPTIONS: '-t handspiker2/ci-tools:latest'
     IMAGE_NAME: handspiker2/ci-tools:base
     DOCKER_FILE: base.Dockerfile
+  script:
+    - docker version
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin "$DOCKER_REGISTRY"
+    - docker pull "$IMAGE_NAME" || true
+    - docker build --cache-from "$IMAGE_NAME" $EXTRA_OPTIONS -t "$IMAGE_NAME" -f $DOCKER_FILE .
+    - docker push "$IMAGE_NAME"
+    - docker push handspiker2/ci-tools:latest
   only:
     refs:
       - master
