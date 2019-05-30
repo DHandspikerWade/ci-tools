@@ -24,7 +24,6 @@ build_base:
   <<: *build_template
   stage: base
   variables:
-    EXTRA_OPTIONS: '--squash'
     IMAGE_NAME: handspiker2/ci-tools:latest
     DOCKER_FILE: base.Dockerfile
   only:
