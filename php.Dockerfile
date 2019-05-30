@@ -38,6 +38,7 @@ apt-get update \
 && make \
 && make test \
 && make install \
+&& cd / && rm -rf /tmp/php-${PHP_VERSION} \
 && php -r "print('hello' . PHP_EOL);"
 
 ARG COMPOSER_VERSION=1.8.5
