@@ -44,10 +44,10 @@ ARG COMPOSER_VERSION=1.8.5
 ENV COMPOSER_HOME /composer
 ENV PATH "/composer/vendor/bin:$PATH"
 ENV COMPOSER_ALLOW_SUPERUSER 1
-RUN RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer --version=${COMPOSER_VERSION}
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer --version=${COMPOSER_VERSION}
 
 # PHPUnit
 RUN \
-wget https://phar.phpunit.de/phpunit.phar \
+wget -nv https://phar.phpunit.de/phpunit.phar \
 && chmod +x phpunit.phar \
-&& mv phpunit.phar /usr/local/bin/phpunit \
+&& mv phpunit.phar /usr/local/bin/phpunit
