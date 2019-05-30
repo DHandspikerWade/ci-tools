@@ -24,7 +24,7 @@ build_base:
   <<: *build_template
   stage: base
   variables:
-    IMAGE_NAME: handspiker2/ci-tools:latest
+    IMAGE_NAME: handspiker2/ci-tools:base
     DOCKER_FILE: base.Dockerfile
   only:
     refs:
