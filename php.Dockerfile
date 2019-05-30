@@ -9,6 +9,8 @@ apt-get update \
     libmcrypt-dev \
     libssl-dev \
 && rm -rf /var/lib/apt/lists/* \
+&& rm -rf /usr/share/doc/* \
+&& rm -rf /usr/share/man/* \
 && cd /tmp/ \
 && wget -nv -O php-${PHP_VERSION}.tar.gz https://www.php.net/distributions/php-${PHP_VERSION}.tar.gz \
 && tar -xzf php-${PHP_VERSION}.tar.gz \
