@@ -62,7 +62,7 @@ php7.2:
   variables:
     <<: *php_variables
     PHP_VERSION: '7.2.17'
-    TAG_NAME: 'php7.12'
+    TAG_NAME: 'php7.2'
 
 php7.1:
   <<: *php_template
