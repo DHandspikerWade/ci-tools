@@ -47,6 +47,7 @@ build_docker:
   <<: *build_template
   stage: depends
   variables: 
+    IMAGE_NAME: handspiker2/ci-tools
     TAG_NAME: docker
     DOCKER_FILE: docker.Dockerfile
   only:
