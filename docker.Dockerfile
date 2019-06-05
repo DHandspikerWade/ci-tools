@@ -8,7 +8,7 @@ RUN wget -nv -O /tmp/docker.tgz https://download.docker.com/linux/static/stable/
 && docker -v \
 && echo "Installing credentials store" \ 
 && apt-get update \
-&& apt-get install -y -qq --no-install-recommends install pass \
+&& apt-get install -y -qq --no-install-recommends pass \
 && rm -rf /var/lib/apt/lists/* \
 && rm -rf /usr/share/doc/* \
 && rm -rf /usr/share/man/*
