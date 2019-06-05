@@ -31,6 +31,7 @@ build_base:
   script:
     - docker version
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin "$DOCKER_REGISTRY"
+    - docker pull ubuntu:18.04
     - docker pull "$IMAGE_NAME" || true
     - docker build --cache-from "$IMAGE_NAME" $EXTRA_OPTIONS -t "$IMAGE_NAME" -f $DOCKER_FILE .
     - docker push "$IMAGE_NAME"
@@ -41,6 +42,20 @@ build_base:
     changes:
       - '.gitlab-ci.yml'
       - base.Dockerfile
+
+build_docker:
+  <<: *build_template
+  stage: depends
+  variables: 
+    TAG_NAME: docker
+    DOCKER_FILE: docker.Dockerfile
+  only:
+    refs:
+      - master
+    changes:
+      - '.gitlab-ci.yml'
+      - base.Dockerfile
+      - docker.Dockerfile
 
 .build_php: &php_template
   <<: *build_template
