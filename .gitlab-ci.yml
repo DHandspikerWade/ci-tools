@@ -9,7 +9,7 @@ stages:
   - depends
 
 .build_template: &build_template
-  image: docker:18
+  image: handspiker2/ci-tools:docker 
   stage: depends
   services:
     - docker:dind
