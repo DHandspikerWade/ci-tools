@@ -12,6 +12,7 @@ mkdir ~/.ssh \
     gpg-agent \
     autoconf \
     autogen \
+    btrfs-tools \
     wget \
     curl \
     rsync \
@@ -28,7 +29,12 @@ mkdir ~/.ssh \
     apt-utils \
     software-properties-common \
     libjpeg-dev \
+    libdevmapper-dev \
     libpng-dev \
+    libc6-dev \
+    libgpgme-dev \
+    libselinux1-dev \
+    iptables \
     imagemagick \
     libssl-dev \
     openssl \
