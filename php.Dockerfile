@@ -39,8 +39,8 @@ apt-get update \
 && make clean \
 && make \
 && make install \
-&& cd / && rm -rf /tmp/php-${PHP_VERSION} \
-&& php -r "print('hello' . PHP_EOL);"
+&& cd / && rm -rf /tmp/php-${PHP_VERSION}* /tmp/pear \
+&& php -r "print('hello world' . PHP_EOL);"
 
 ARG COMPOSER_VERSION=1.8.5
 ENV COMPOSER_HOME /composer
