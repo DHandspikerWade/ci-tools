@@ -42,6 +42,8 @@ build_base:
     changes:
       - '.gitlab-ci.yml'
       - base.Dockerfile
+    variables:
+      - $UPDATE
 
 build_docker:
   <<: *build_template
@@ -57,6 +59,8 @@ build_docker:
       - '.gitlab-ci.yml'
       - base.Dockerfile
       - docker.Dockerfile
+    variables:
+      - $UPDATE
 
 .build_php: &php_template
   <<: *build_template
@@ -72,6 +76,8 @@ build_docker:
       - '.gitlab-ci.yml'
       - base.Dockerfile
       - php.Dockerfile
+    variables:
+      - $UPDATE
 
 php7.2:
   <<: *php_template
