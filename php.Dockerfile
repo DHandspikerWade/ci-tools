@@ -40,7 +40,9 @@ apt-get update \
 && make \
 && make install \
 && cd / && rm -rf /tmp/php-${PHP_VERSION}* /tmp/pear \
-&& php -r "print('hello world' . PHP_EOL);"
+&& php -r "print('hello world' . PHP_EOL);" \
+# Update PECL as it's not updated in tarballs
+&& pecl channel-update pecl.php.net
 
 ARG COMPOSER_VERSION=1.8.5
 ENV COMPOSER_HOME /composer
