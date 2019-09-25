@@ -8,6 +8,8 @@ RUN apt-get update \
 && apt-add-repository --yes --update ppa:ansible/ansible \
 && apt-get install -y -qq --no-install-recommends ansible \
 && ansible --version \
+# prevent warning about invalid host file
+&& touch /data/hosts \
 && ansible localhost -m ping \
 && rm -rf /var/lib/apt/lists/* \
 && rm -rf /usr/share/doc/* \
