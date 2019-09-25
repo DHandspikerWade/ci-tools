@@ -1,6 +1,9 @@
 FROM ubuntu:18.04
 # Install English locale
-RUN apt-get update && apt-get install -y -q --no-install-recommends language-pack-en-base && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y -q --no-install-recommends language-pack-en-base \
+&& rm -rf /var/lib/apt/lists/* \
+&& mkdir -p /data
+WORKDIR /data
 ENV LC_ALL en_US.UTF-8
 
 ARG YQ_VERSION=2.4.0

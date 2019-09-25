@@ -43,6 +43,21 @@ build_base:
       - '.gitlab-ci.yml'
       - base.Dockerfile
 
+build_ansible:
+  <<: *build_template
+  stage: depends
+  variables: 
+    IMAGE_NAME: handspiker2/ci-tools
+    TAG_NAME: ansible
+    DOCKER_FILE: ansible.Dockerfile
+  only:
+    refs:
+      - master
+    changes:
+      - '.gitlab-ci.yml'
+      - base.Dockerfile
+      - ansible.Dockerfile
+
 build_docker:
   <<: *build_template
   stage: depends
