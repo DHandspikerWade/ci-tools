@@ -1,6 +1,7 @@
 FROM handspiker2/ci-tools:base
 
 ENV ANSIBLE_INVENTORY="/etc/ansible/hosts,/data/hosts"
+ENV ANSIBLE_PYTHON_INTERPRETER="auto_silent"
 ENV ANSIBLE_LOCAL_TEMP=/tmp
 
 RUN apt-get update \
