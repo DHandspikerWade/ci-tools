@@ -78,6 +78,7 @@ build_docker:
   stage: depends
   variables: &php_variables
     PHP_VERSION: ''
+    EXTRA_OPTIONS: '--build-arg PHP_VERSION'
     DOCKER_FILE: php.Dockerfile 
     IMAGE_NAME: handspiker2/ci-tools
   only:
