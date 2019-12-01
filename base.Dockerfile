@@ -52,7 +52,7 @@ mkdir ~/.ssh \
 # python and node are basically build tools at this point
 && apt-get install -y nodejs python3.6  \
 && npm install yarn -g \
-&& npm cache clean --force\
+&& npm cache clean --force \
 && rm -rf /var/lib/apt/lists/* \
 && rm -rf /usr/share/doc/* \
 && rm -rf /usr/share/man/*
