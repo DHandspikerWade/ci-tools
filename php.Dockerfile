@@ -8,6 +8,8 @@ apt-get update \
     libxml2-dev \
     libmcrypt-dev \
     libssl-dev \
+    libsqlite3-dev \
+    libonig-dev \
 && rm -rf /var/lib/apt/lists/* \
 && rm -rf /usr/share/doc/* \
 && rm -rf /usr/share/man/* \

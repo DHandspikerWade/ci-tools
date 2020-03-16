@@ -96,6 +96,20 @@ build_docker:
     EXTRA_OPTIONS: '--build-arg PHP_VERSION'
     DOCKER_FILE: php.Dockerfile 
 
+build_php7.4:
+  <<: *php_template
+  variables:
+    <<: *php_variables
+    PHP_VERSION: '7.4.3'
+    TAG_NAME: 'php7.4'
+
+build_php7.3:
+  <<: *php_template
+  variables:
+    <<: *php_variables
+    PHP_VERSION: '7.3.15'
+    TAG_NAME: 'php7.3'
+
 build_php7.2:
   <<: *php_template
   variables:
@@ -132,6 +146,22 @@ deploy_docker:
   needs: ['build_docker']
   dependencies:
     - build_docker
+
+deploy_php7.4:
+  <<: *deploy_template
+  variables: 
+    TAG_NAME: php7.4
+  needs: ['build_php7.4']
+  dependencies:
+    - build_php7.4
+
+deploy_php7.3:
+  <<: *deploy_template
+  variables: 
+    TAG_NAME: php7.3
+  needs: ['build_php7.3']
+  dependencies:
+    - build_php7.3
 
 deploy_php7.2:
   <<: *deploy_template
