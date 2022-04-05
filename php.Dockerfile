@@ -33,6 +33,7 @@ apt-get update \
   --enable-zip \
   --with-curl \
   --with-iconv \
+  --with-gd \
   --with-mcrypt \
   --with-openssl \
   --with-pear \
