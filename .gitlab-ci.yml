@@ -84,6 +84,7 @@ deploy_base:
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin "$DOCKER_REGISTRY"
     - export IMAGE_ARTIFACT="base_image"
     - cat artifacts/$IMAGE_ARTIFACT | docker load
+    - docker tag ${IMAGE_NAME}:base ${IMAGE_NAME}:latest
     - docker push ${IMAGE_NAME}:base && docker push ${IMAGE_NAME}:latest
   only:
     refs:
