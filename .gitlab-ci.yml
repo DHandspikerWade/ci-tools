@@ -10,30 +10,6 @@ stages:
   - depends
   - deploy
 
-build_base:
-  image: handspiker2/ci-tools:docker 
-  services:
-    - docker:dind
-  stage: base
-  variables:
-    EXTRA_OPTIONS: '-t handspiker2/ci-tools:latest'
-    IMAGE_NAME: handspiker2/ci-tools:base
-    IMAGE_ARTIFACT: base_image
-    DOCKER_FILE: base.Dockerfile
-  script:
-    - docker version
-    - docker pull ubuntu:18.04
-    - docker pull "$IMAGE_NAME" || true
-    - docker build --cache-from "$IMAGE_NAME" $EXTRA_OPTIONS -t "$IMAGE_NAME" -f $DOCKER_FILE .
-    - rm -f artifacts/.gitkeep
-    - docker save "$IMAGE_NAME" > artifacts/$IMAGE_ARTIFACT
-    #- docker push "$IMAGE_NAME"
-    #- docker push handspiker2/ci-tools:latest
-  artifacts:
-    name: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
-    paths:
-      - artifacts/
-
 .build_template: &build_template
   image: handspiker2/ci-tools:docker 
   stage: depends
@@ -73,6 +49,48 @@ build_base:
   only:
     refs:
       - master
+
+build_base:
+  image: handspiker2/ci-tools:docker 
+  services:
+    - docker:dind
+  stage: base
+  variables:
+    EXTRA_OPTIONS: '-t handspiker2/ci-tools:latest'
+    IMAGE_NAME: handspiker2/ci-tools:base
+    IMAGE_ARTIFACT: base_image
+    DOCKER_FILE: base.Dockerfile
+  script:
+    - docker version
+    - docker pull ubuntu:18.04
+    - docker pull "$IMAGE_NAME" || true
+    - docker build --cache-from "$IMAGE_NAME" $EXTRA_OPTIONS -t "$IMAGE_NAME" -f $DOCKER_FILE .
+    - rm -f artifacts/.gitkeep
+    - docker save "$IMAGE_NAME" > artifacts/$IMAGE_ARTIFACT
+    #- docker push "$IMAGE_NAME"
+    #- docker push handspiker2/ci-tools:latest
+  artifacts:
+    name: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
+    paths:
+      - artifacts/
+
+deploy_base:
+    image: handspiker2/ci-tools:docker 
+  stage: deploy
+  services:
+    - docker:dind
+  script:
+    - docker version
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin "$DOCKER_REGISTRY"
+    - export IMAGE_ARTIFACT="base_image"
+    - cat artifacts/$IMAGE_ARTIFACT | docker load
+    - docker push ${IMAGE_NAME}:base && docker push ${IMAGE_NAME}:latest
+  only:
+    refs:
+      - master
+  needs: ['build_base']
+  dependencies:
+    - build_base
 
 build_ansible:
   <<: *build_template
