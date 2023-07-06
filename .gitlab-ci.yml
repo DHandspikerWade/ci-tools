@@ -75,7 +75,7 @@ build_base:
       - artifacts/
 
 deploy_base:
-    image: handspiker2/ci-tools:docker 
+  image: handspiker2/ci-tools:docker 
   stage: deploy
   services:
     - docker:dind
