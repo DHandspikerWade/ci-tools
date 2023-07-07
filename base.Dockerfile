@@ -47,7 +47,7 @@ mkdir ~/.ssh \
 && ln -s /usr/include/x86_64-linux-gnu/curl /usr/include/curl \
 && wget -nv -O /usr/bin/yq https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_386 \
 && chmod +x /usr/bin/yq \
-&& curl -sL https://deb.nodesource.com/setup_10.x | bash - \
+&& curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
 # python and node are basically build tools at this point
 && apt-get install -y nodejs python3.11  \
 && npm install yarn -g \
