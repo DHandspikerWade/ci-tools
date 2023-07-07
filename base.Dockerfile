@@ -15,7 +15,6 @@ mkdir ~/.ssh \
     gpg-agent \
     autoconf \
     autogen \
-    btrfs-tools \
     wget \
     curl \
     rsync \
