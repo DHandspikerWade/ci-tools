@@ -1,6 +1,6 @@
 FROM handspiker2/ci-tools:base
 
-ARG DOCKER_VERSION=18.09.6
+ARG DOCKER_VERSION=24.0.3
 RUN echo "Installing docker CLI" \
 && wget -nv -O /tmp/docker.tgz https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz \
 && cd /tmp \

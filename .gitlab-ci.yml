@@ -62,7 +62,7 @@ build_base:
     DOCKER_FILE: base.Dockerfile
   script:
     - docker version
-    - docker pull ubuntu:18.04
+    - docker pull ubuntu:22.04
     - docker pull "$IMAGE_NAME" || true
     - docker build --cache-from "$IMAGE_NAME" $EXTRA_OPTIONS -t "$IMAGE_NAME" -f $DOCKER_FILE .
     - rm -f artifacts/.gitkeep
