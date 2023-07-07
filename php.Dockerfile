@@ -1,8 +1,7 @@
 FROM handspiker2/ci-tools:base
-ARG PHP_VERSION=8.2.8
 
 RUN \
-apt-get update \
+apt-get update -q \
 && apt-get install -y -qq --no-install-recommends \
     mysql-client \
     libxml2-dev \
@@ -10,9 +9,12 @@ apt-get update \
     libssl-dev \
     libsqlite3-dev \
     libonig-dev \
+    pkg-config \
 && rm -rf /var/lib/apt/lists/* \
 && rm -rf /usr/share/doc/* \
 && rm -rf /usr/share/man/*
+
+ARG PHP_VERSION=8.2.8
 
 RUN cd /tmp/ \
 && wget -nv -O php-${PHP_VERSION}.tar.gz https://www.php.net/distributions/php-${PHP_VERSION}.tar.gz \
