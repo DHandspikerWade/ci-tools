@@ -16,8 +16,6 @@ RUN echo "Installing docker CLI" \
 
 RUN echo "Installing podman and skopeo" \
 && apt-get update \
-&& add-apt-repository -y ppa:projectatomic/ppa \
-&& apt-get update \
 && apt-get -y install --no-install-recommends uidmap podman skopeo \
 && podman version \
 && skopeo -v \
