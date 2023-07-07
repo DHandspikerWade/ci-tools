@@ -1,6 +1,8 @@
 FROM ubuntu:22.04
 # Install English locale
 RUN apt-get update && apt-get install -y -q --no-install-recommends language-pack-en-base \
+# Fixes timezone issue when python is used
+&& DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get -yq install tzdata \
 && rm -rf /var/lib/apt/lists/* \
 && mkdir -p /data
 WORKDIR /data
