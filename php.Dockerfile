@@ -71,7 +71,8 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer --version=${COMPOSER_VERSION}
 
 # PHPUnit
-RUN \
-wget -nv https://phar.phpunit.de/phpunit.phar \
-&& chmod +x phpunit.phar \
-&& mv phpunit.phar /usr/local/bin/phpunit
+ARG PHPUNIT_VERSION=9
+RUN wget -nv https://phar.phpunit.de/phpunit-${PHPUNIT_VERSION}.phar\
+&& chmod +x phpunit-${PHPUNIT_VERSION}.phar \
+&& mv phpunit-${PHPUNIT_VERSION}.phar /usr/local/bin/phpunit \
+&& phpunit --version
