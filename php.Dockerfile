@@ -1,5 +1,5 @@
 FROM handspiker2/ci-tools:base
-ARG PHP_VERSION=7.1.28
+ARG PHP_VERSION=8.2.8
 
 RUN \
 apt-get update \
@@ -47,7 +47,7 @@ apt-get update \
 # Update PECL as it's not updated in tarballs
 && pecl channel-update pecl.php.net
 
-ARG COMPOSER_VERSION=1.8.5
+ARG COMPOSER_VERSION=2.5.8
 ENV COMPOSER_HOME /composer
 ENV PATH "/composer/vendor/bin:$PATH"
 ENV COMPOSER_ALLOW_SUPERUSER 1
