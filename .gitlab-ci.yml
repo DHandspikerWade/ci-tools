@@ -155,7 +155,7 @@ deploy_ansible:
 deploy_docker:
   <<: *deploy_template
   variables: 
-    TAG_NAME: ansible
+    TAG_NAME: docker
   needs: ['build_docker']
   dependencies:
     - build_docker
