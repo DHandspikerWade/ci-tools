@@ -14,10 +14,10 @@ RUN echo "Installing docker CLI" \
 && rm -rf /usr/share/doc/* \
 && rm -rf /usr/share/man/*
 
-RUN echo "Installing podman and skopeo" \
+RUN echo "Installing buildah and skopeo" \
 && apt-get update \
-&& apt-get -y install --no-install-recommends uidmap podman skopeo \
-&& podman version \
+&& apt-get -y install --no-install-recommends uidmap buildah skopeo \
+&& buildah version \
 && skopeo -v \
 && rm -rf /var/lib/apt/lists/* \
 && rm -rf /usr/share/doc/* \
