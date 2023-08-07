@@ -1,8 +1,7 @@
 FROM handspiker2/ci-tools:base
-ARG PHP_VERSION=7.1.28
 
 RUN \
-apt-get update \
+apt-get update -q \
 && apt-get install -y -qq --no-install-recommends \
     mysql-client \
     libxml2-dev \
@@ -10,10 +9,27 @@ apt-get update \
     libssl-dev \
     libsqlite3-dev \
     libonig-dev \
+    pkg-config \
 && rm -rf /var/lib/apt/lists/* \
 && rm -rf /usr/share/doc/* \
-&& rm -rf /usr/share/man/* \
-&& cd /tmp/ \
+&& rm -rf /usr/share/man/*
+
+ARG PHP_VERSION=8.2.8
+
+# Ubuntu 22.04 switched to libssl3 but older versions of PHP need 1.1.1. It's no longer in repos so must be compiled.
+RUN dpkg --compare-versions "$PHP_VERSION" 'gt' '8.1.0' || ( \
+  cd /tmp \
+  && wget -nv -O openssl-1.1.1u.tar.gz https://www.openssl.org/source/openssl-1.1.1u.tar.gz \
+  && tar -xzf openssl-1.1.1u.tar.gz \
+  && cd openssl-1.1.1u \
+  # "Configure" has a capital letter in 1.1.1
+  && ./Configure --prefix=/opt/openssl1.1 -fPIC -shared linux-x86_64 \
+  && make && make install \
+  && cd / \
+  && rm -r /tmp/openssl* \
+)
+
+RUN cd /tmp/ \
 && wget -nv -O php-${PHP_VERSION}.tar.gz https://www.php.net/distributions/php-${PHP_VERSION}.tar.gz \
 && tar -xzf php-${PHP_VERSION}.tar.gz \
 && cd /tmp/php-${PHP_VERSION} \
@@ -35,7 +51,8 @@ apt-get update \
   --with-iconv \
   --with-gd \
   --with-mcrypt \
-  --with-openssl \
+  --with-openssl PKG_CONFIG_PATH=/opt/openssl1.1/lib/pkgconfig \
+  --with-openssl-dir=/opt/openssl1.1 \
   --with-pear \
   --with-readline \
   --with-zlib \
@@ -47,14 +64,15 @@ apt-get update \
 # Update PECL as it's not updated in tarballs
 && pecl channel-update pecl.php.net
 
-ARG COMPOSER_VERSION=1.8.5
+ARG COMPOSER_VERSION=2.5.8
 ENV COMPOSER_HOME /composer
 ENV PATH "/composer/vendor/bin:$PATH"
 ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer --version=${COMPOSER_VERSION}
 
 # PHPUnit
-RUN \
-wget -nv https://phar.phpunit.de/phpunit.phar \
-&& chmod +x phpunit.phar \
-&& mv phpunit.phar /usr/local/bin/phpunit
+ARG PHPUNIT_VERSION=9
+RUN wget -nv https://phar.phpunit.de/phpunit-${PHPUNIT_VERSION}.phar\
+&& chmod +x phpunit-${PHPUNIT_VERSION}.phar \
+&& mv phpunit-${PHPUNIT_VERSION}.phar /usr/local/bin/phpunit \
+&& phpunit --version

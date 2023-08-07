@@ -62,7 +62,7 @@ build_base:
     DOCKER_FILE: base.Dockerfile
   script:
     - docker version
-    - docker pull ubuntu:18.04
+    - docker pull ubuntu:22.04
     - docker pull "$IMAGE_NAME" || true
     - docker build --cache-from "$IMAGE_NAME" $EXTRA_OPTIONS -t "$IMAGE_NAME" -f $DOCKER_FILE .
     - rm -f artifacts/.gitkeep
@@ -122,33 +122,27 @@ build_php7.4:
     PHP_VERSION: '7.4.3'
     TAG_NAME: 'php7.4'
 
-build_php7.3:
+build_php8.1:
   <<: *php_template
   variables:
     <<: *php_variables
-    PHP_VERSION: '7.3.15'
-    TAG_NAME: 'php7.3'
+    PHP_VERSION: '8.1.21'
+    TAG_NAME: 'php8.1'
 
-build_php7.2:
+build_php8.2:
   <<: *php_template
   variables:
     <<: *php_variables
-    PHP_VERSION: '7.2.17'
-    TAG_NAME: 'php7.2'
+    PHP_VERSION: '8.2.8'
+    TAG_NAME: 'php8.2'
 
-build_php7.1:
+build_php8.0:
   <<: *php_template
   variables:
     <<: *php_variables
-    PHP_VERSION: '7.1.28'
-    TAG_NAME: 'php7.1'
+    PHP_VERSION: '8.0.29'
+    TAG_NAME: 'php8.0'
 
-build_php5.6:
-  <<: *php_template
-  variables:
-    <<: *php_variables
-    PHP_VERSION: '5.6.40'
-    TAG_NAME: 'php5.6'
 
 deploy_ansible:
   <<: *deploy_template
@@ -174,34 +168,26 @@ deploy_php7.4:
   dependencies:
     - build_php7.4
 
-deploy_php7.3:
+deploy_php8.2:
   <<: *deploy_template
   variables: 
-    TAG_NAME: php7.3
-  needs: ['build_php7.3']
+    TAG_NAME: php8.2
+  needs: ['build_php8.2']
   dependencies:
-    - build_php7.3
+    - build_php8.2
 
-deploy_php7.2:
+deploy_php8.1:
   <<: *deploy_template
   variables: 
-    TAG_NAME: php7.2
-  needs: ['build_php7.2']
+    TAG_NAME: php8.1
+  needs: ['build_php8.1']
   dependencies:
-    - build_php7.2
+    - build_php8.1
 
-deploy_php7.1:
+deploy_php8.0:
   <<: *deploy_template
   variables: 
-    TAG_NAME: php7.1
-  needs: ['build_php7.1']
+    TAG_NAME: php8.0
+  needs: ['build_php8.0']
   dependencies:
-    - build_php7.1
-
-deploy_php5.6:
-  <<: *deploy_template
-  variables: 
-    TAG_NAME: php5.6
-  needs: ['build_php5.6']
-  dependencies:
-    - build_php5.6
+    - build_php8.0
