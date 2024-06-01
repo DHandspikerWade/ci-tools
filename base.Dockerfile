@@ -40,6 +40,7 @@ mkdir ~/.ssh \
     libselinux1-dev \
     iptables \
     imagemagick \
+    sqlite3 \
     libssl-dev \
     openssl \
     libreadline-dev \
