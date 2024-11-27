@@ -60,7 +60,7 @@ RUN cd /tmp/ \
 && make \
 && make install \
 && cd / && rm -rf /tmp/php-${PHP_VERSION}* /tmp/pear \
-&& php -r "print('hello world' . PHP_EOL);" \
+&& php -r "print('hello world from PHP ' . PHP_VERSION . PHP_EOL);" \
 # Update PECL as it's not updated in tarballs
 && pecl channel-update pecl.php.net
 
