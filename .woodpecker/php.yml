@@ -26,6 +26,9 @@ steps:
   commands: 
     - PHP_VERSION=${PHP_VERSION}
     - echo "php$${PHP_VERSION%.*}" > .tags
+  when:
+    event: *step_events
+    
 - name: Build Image
   image: *build_image
   settings:
