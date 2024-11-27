@@ -1,0 +1,48 @@
+matrix:
+  PHP_VERSION:
+    - 7.4.3
+    - 8.0.29
+    - 8.1.21
+    - 8.2.8
+
+variables:
+  - &build_image woodpeckerci/plugin-docker-buildx:5.0
+  - &build_settings
+    repo: handspiker2/ci-tools
+    dockerfile: php.Dockerfile
+    build_args: "PHP_VERSION=${PHP_VERSION}"
+    auto_tag: false
+    tags_file: .tags
+    dry_run: true
+    platforms: [linux/amd64]
+  - &step_events [push, manual]
+
+depends_on: 
+  - base
+
+steps:
+- name: Generate tags
+  image: handspiker2/ci-tools:base
+  commands: 
+    - PHP_VERSION=${PHP_VERSION}
+    - echo "php$${PHP_VERSION%.*}" > .tags
+- name: Build Image
+  image: *build_image
+  settings:
+    <<: *build_settings
+  when:
+    event: *step_events
+
+- name: Build&Publish Image
+  image: *build_image
+  settings:
+    <<: *build_settings
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+    dry_run: false
+  when:
+    branch:
+    - ${CI_REPO_DEFAULT_BRANCH}
+    event: *step_events

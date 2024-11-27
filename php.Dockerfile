@@ -14,7 +14,7 @@ apt-get update -q \
 && rm -rf /usr/share/doc/* \
 && rm -rf /usr/share/man/*
 
-ARG PHP_VERSION=8.2.8
+ARG PHP_VERSION
 
 # Ubuntu 22.04 switched to libssl3 but older versions of PHP need 1.1.1. It's no longer in repos so must be compiled.
 RUN dpkg --compare-versions "$PHP_VERSION" 'gt' '8.1.0' || ( \
