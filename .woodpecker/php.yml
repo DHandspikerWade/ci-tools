@@ -34,6 +34,9 @@ steps:
   settings:
     <<: *build_settings
   when:
+    branch:
+      exclude:
+      - ${CI_REPO_DEFAULT_BRANCH}
     event: *step_events
 
 - name: Build&Publish Image
