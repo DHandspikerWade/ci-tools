@@ -1,4 +1,5 @@
-FROM handspiker2/ci-tools:base
+ARG BASE_IMAGE="handspiker2/ci-tools:base"
+FROM ${BASE_IMAGE}
 
 RUN \
 apt-get update -q \

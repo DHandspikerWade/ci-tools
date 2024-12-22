@@ -1,38 +1,35 @@
 variables:
   - &build_image woodpeckerci/plugin-docker-buildx:5.0
-  - &build_settings
-    repo: handspiker2/ci-tools
-    dockerfile: ansible.Dockerfile
-    tags:
-      - ansible
-    dry_run: true
-    platforms: [linux/amd64]
+  - &built_image_tag ansible-${CI_COMMIT_SHA:0:8}-${CI_PIPELINE_NUMBER}
   - &step_events [push, manual]
 
 depends_on: 
   - base
 
 steps:
-- name: Build Ansible Image
+- name: Build Image
   image: *build_image
   settings:
-    <<: *build_settings
+    repo: registry.ci.spikedhand.com/handspiker2/ci-tools
+    build_args: "BASE_IMAGE=registry.ci.spikedhand.com/handspiker2/ci-tools:base-${CI_COMMIT_SHA:0:8}-${CI_PIPELINE_NUMBER}"
+    dockerfile: ansible.Dockerfile
+    tags: 
+      - *built_image_tag
+    dry_run: false
+    platforms: [linux/amd64]
   when:
-    branch:
-      exclude:
-      - ${CI_REPO_DEFAULT_BRANCH}
     event: *step_events
 
-- name: Build&Publish Ansible Image
-  image: *build_image
-  settings:
-    <<: *build_settings
-    username:
-      from_secret: docker_username
-    password:
-      from_secret: docker_password
-    dry_run: false
-  when:
-    branch:
-    - ${CI_REPO_DEFAULT_BRANCH}
-    event: *step_events
+# - name: Build&Publish Ansible Image
+#   image: *build_image
+#   settings:
+#     <<: *build_settings
+#     username:
+#       from_secret: docker_username
+#     password:
+#       from_secret: docker_password
+#     dry_run: false
+#   when:
+#     branch:
+#     - ${CI_REPO_DEFAULT_BRANCH}
+#     event: *step_events
