@@ -7,10 +7,8 @@ variables:
 steps:
 - name: Build Base Image
   image: *build_image
-  secrets:
-  - ephemeral_registry
   settings:
-    repo: ${EPHEMERAL_REGISTRY}/handspiker2/ci-tools
+    repo: registry.ci.spikedhand.com/handspiker2/ci-tools
     dockerfile: base.Dockerfile
     tags: 
       - *built_image_tag
