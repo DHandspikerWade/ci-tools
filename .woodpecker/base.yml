@@ -1,36 +1,37 @@
 variables:
   - &build_image woodpeckerci/plugin-docker-buildx:5.0
-  - &build_settings
-    repo: handspiker2/ci-tools
-    dockerfile: base.Dockerfile
-    tags:
-      - base
-    dry_run: true
-    platforms: [linux/amd64]
+  - &built_image_tag base-$CI_COMMIT_SHA-$CI_PIPELINE_NUMBER
+  - &image_repo handspiker2/ci-tools
   - &step_events [push, manual]
 
 
 steps:
 - name: Build Base Image
   image: *build_image
+  environment:
+    EPHEMERAL_REGISTRY:
+      from_secret: ephemeral_registry
+    IMAGE_NAME: *built_image_tag
   settings:
-    <<: *build_settings
+    repo: ${EPHEMERAL_REGISTRY}/${IMAGE_NAME}
+    dockerfile: base.Dockerfile
+    tags: 
+      - *built_image_tag
+    dry_run: false
+    platforms: [linux/amd64]
   when:
-    branch:
-      exclude:
-      - ${CI_REPO_DEFAULT_BRANCH}
     event: *step_events
 
-- name: Build&Publish Base Image
-  image: *build_image
-  settings:
-    <<: *build_settings
-    username:
-      from_secret: docker_username
-    password:
-      from_secret: docker_password
-    dry_run: false
-  when:
-    branch:
-    - ${CI_REPO_DEFAULT_BRANCH}
-    event: *step_events
+# - name: Build&Publish Base Image
+#   image: *build_image
+#   settings:
+#     <<: *build_settings
+#     username:
+#       from_secret: docker_username
+#     password:
+#       from_secret: docker_password
+#     dry_run: false
+#   when:
+#     branch:
+#     - ${CI_REPO_DEFAULT_BRANCH}
+#     event: *step_events
