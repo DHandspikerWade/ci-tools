@@ -1,19 +1,16 @@
 variables:
   - &build_image woodpeckerci/plugin-docker-buildx:5.0
   - &built_image_tag base-$CI_COMMIT_SHA-$CI_PIPELINE_NUMBER
-  - &image_repo handspiker2/ci-tools
   - &step_events [push, manual]
 
 
 steps:
 - name: Build Base Image
   image: *build_image
-  environment:
-    EPHEMERAL_REGISTRY:
-      from_secret: ephemeral_registry
-    IMAGE_NAME: *built_image_tag
+  secrets:
+  - ephemeral_registry
   settings:
-    repo: ${EPHEMERAL_REGISTRY}/${IMAGE_NAME}
+    repo: ${EPHEMERAL_REGISTRY}/handspiker2/ci-tools
     dockerfile: base.Dockerfile
     tags: 
       - *built_image_tag
