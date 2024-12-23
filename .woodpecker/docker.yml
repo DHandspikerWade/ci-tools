@@ -20,16 +20,18 @@ steps:
   when:
     event: *step_events
 
-# - name: Build&Publish Image
-#   image: *build_image
-#   settings:
-#     <<: *build_settings
-#     username:
-#       from_secret: docker_username
-#     password:
-#       from_secret: docker_password
-#     dry_run: false
-#   when:
-#     branch:
-#     - ${CI_REPO_DEFAULT_BRANCH}
-#     event: *step_events
+- name: Publish Image
+  image: handspiker2/ci-tools:docker
+  environment:
+    DOCKER_USER:
+      from_secret: docker_username
+    DOCKER_PASSWORD:
+      from_secret: docker_password
+    IMAGE_TAG: *built_image_tag
+  commands:
+    - echo $$DOCKER_PASSWORD | skopeo login -u $DOCKER_USER --password-stdin docker.io
+    - skopeo copy docker://registry.ci.spikedhand.com/handspiker2/ci-tools:$IMAGE_TAG docker://handspiker2/ci-tools:docker
+  when:
+    branch:
+    - ${CI_REPO_DEFAULT_BRANCH}
+    event: *step_events

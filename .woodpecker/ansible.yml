@@ -32,6 +32,6 @@ steps:
     - echo $$DOCKER_PASSWORD | skopeo login -u $DOCKER_USER --password-stdin docker.io
     - skopeo copy docker://registry.ci.spikedhand.com/handspiker2/ci-tools:$IMAGE_TAG docker://handspiker2/ci-tools:ansible
   when:
- #   branch:
-  #  - ${CI_REPO_DEFAULT_BRANCH}
+    branch:
+    - ${CI_REPO_DEFAULT_BRANCH}
     event: *step_events
