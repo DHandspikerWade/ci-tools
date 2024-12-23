@@ -21,7 +21,7 @@ steps:
     event: *step_events
 
 - name: Publish Image
-  image: *build_image
+  image: handspiker2/ci-tools:docker
   environment:
     DOCKER_USER:
       from_secret: docker_username
