@@ -44,7 +44,6 @@ steps:
       from_secret: docker_username
     DOCKER_PASSWORD:
       from_secret: docker_password
-    IMAGE_TAG: *built_image_tag
   commands:
     - echo $$DOCKER_PASSWORD | skopeo login -u $DOCKER_USER --password-stdin docker.io
     - export IMAGE_TAG="$$(cat .tags)"
