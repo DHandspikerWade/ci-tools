@@ -29,6 +29,7 @@ mkdir ~/.ssh \
     pv \
     openssh-client \
     git \
+    git-lfs \
     build-essential \
     apt-utils \
     software-properties-common \
