@@ -1,4 +1,5 @@
-FROM handspiker2/ci-tools:base
+ARG BASE_IMAGE="handspiker2/ci-tools:base"
+FROM ${BASE_IMAGE}
 
 ENV ANSIBLE_INVENTORY="/etc/ansible/hosts,/data/hosts"
 ENV ANSIBLE_PYTHON_INTERPRETER="auto_silent"

@@ -1,4 +1,5 @@
-FROM handspiker2/ci-tools:base
+ARG BASE_IMAGE="handspiker2/ci-tools:base"
+FROM ${BASE_IMAGE}
 
 ARG DOCKER_VERSION=24.0.3
 RUN echo "Installing docker CLI" \

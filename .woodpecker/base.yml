@@ -1,12 +1,6 @@
 variables:
   - &build_image woodpeckerci/plugin-docker-buildx:5.0
-  - &build_settings
-    repo: handspiker2/ci-tools
-    dockerfile: base.Dockerfile
-    tags:
-      - base
-    dry_run: true
-    platforms: [linux/amd64]
+  - &built_image_tag base-${CI_COMMIT_SHA:0:8}-${CI_PIPELINE_NUMBER}
   - &step_events [push, manual]
 
 
@@ -14,22 +8,28 @@ steps:
 - name: Build Base Image
   image: *build_image
   settings:
-    <<: *build_settings
+    repo: registry.ci.spikedhand.com/handspiker2/ci-tools
+    dockerfile: base.Dockerfile
+    tags: 
+      - *built_image_tag
+    dry_run: false
+    platforms: [linux/amd64]
   when:
-    branch:
-      exclude:
-      - ${CI_REPO_DEFAULT_BRANCH}
     event: *step_events
 
-- name: Build&Publish Base Image
-  image: *build_image
-  settings:
-    <<: *build_settings
-    username:
+- name: Publish Image
+  image: handspiker2/ci-tools:docker
+  environment:
+    DOCKER_USER:
       from_secret: docker_username
-    password:
+    DOCKER_PASSWORD:
       from_secret: docker_password
-    dry_run: false
+    IMAGE_TAG: *built_image_tag
+  commands:
+    - echo $$DOCKER_PASSWORD | skopeo login -u $DOCKER_USER --password-stdin docker.io
+    - skopeo copy docker://registry.ci.spikedhand.com/handspiker2/ci-tools:$IMAGE_TAG docker://handspiker2/ci-tools:base
+    # Update the `latest` tag to match `base`
+    - skopeo copy docker://registry.ci.spikedhand.com/handspiker2/ci-tools:$IMAGE_TAG docker://handspiker2/ci-tools:latest
   when:
     branch:
     - ${CI_REPO_DEFAULT_BRANCH}
