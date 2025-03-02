@@ -2,6 +2,7 @@ variables:
   - &build_image woodpeckerci/plugin-docker-buildx:5.0
   - &built_image_tag base-${CI_COMMIT_SHA:0:8}-${CI_PIPELINE_NUMBER}
   - &step_events [push, manual]
+  - &build_platforms [linux/amd64, linux/arm/v8]
 
 
 steps:
@@ -13,7 +14,7 @@ steps:
     tags: 
       - *built_image_tag
     dry_run: false
-    platforms: [linux/amd64]
+    platforms: *build_platforms
   when:
     event: *step_events
 

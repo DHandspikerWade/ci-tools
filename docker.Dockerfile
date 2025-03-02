@@ -3,7 +3,7 @@ FROM ${BASE_IMAGE}
 
 ARG DOCKER_VERSION=28.0.1
 RUN echo "Installing docker CLI" \
-&& wget -nv -O /tmp/docker.tgz https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz \
+&& wget -nv -O /tmp/docker.tgz https://download.docker.com/linux/static/stable/$(uname -m)/docker-${DOCKER_VERSION}.tgz \
 && cd /tmp \
 && tar -xzvf docker.tgz \
 && cp docker/* /usr/bin/ \
@@ -25,6 +25,6 @@ RUN echo "Installing buildah and skopeo" \
 && rm -rf /usr/share/man/*
 
 RUN echo "Installing kubectl" \
-&& curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl \
+&& curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/$(dpkg --print-architecture)/kubectl \
 && chmod +x ./kubectl \
 && mv ./kubectl /usr/local/bin/kubectl

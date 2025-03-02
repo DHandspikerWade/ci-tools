@@ -48,8 +48,8 @@ mkdir ~/.ssh \
     libssl-dev \
     libcurl4-openssl-dev \
 # Debian moved curl libraries causing older PHP builds to fail. (https://bugs.php.net/bug.php?id=74125) 
-&& ln -s /usr/include/x86_64-linux-gnu/curl /usr/include/curl \
-&& wget -nv -O /usr/bin/yq https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64\
+&& ln -s /usr/include/$(uname -p)-linux-gnu/curl /usr/include/curl \
+&& wget -nv -O /usr/bin/yq https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_$(dpkg --print-architecture) \
 && chmod +x /usr/bin/yq \
 && curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
 # python and node are basically build tools at this point
