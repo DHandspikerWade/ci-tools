@@ -1,7 +1,7 @@
 ARG BASE_IMAGE="handspiker2/ci-tools:base"
 FROM ${BASE_IMAGE}
 
-ARG DOCKER_VERSION=24.0.3
+ARG DOCKER_VERSION=28.0.1
 RUN echo "Installing docker CLI" \
 && wget -nv -O /tmp/docker.tgz https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz \
 && cd /tmp \
