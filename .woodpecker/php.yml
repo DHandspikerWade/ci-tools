@@ -8,7 +8,7 @@ matrix:
 variables:
   - &build_image woodpeckerci/plugin-docker-buildx:5.0
   - &step_events [push, manual]
-  - &build_platforms [linux/amd64, linux/arm/v8]
+  - &build_platforms [linux/amd64, linux/arm64]
 
 depends_on: 
   - base
