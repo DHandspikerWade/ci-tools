@@ -1,9 +1,9 @@
 matrix:
   PHP_VERSION:
-    - 8.4.4
-    - 8.3.17
-    - 8.2.27
-    - 8.1.31
+    - 8.4.5
+    - 8.3.19
+    - 8.2.28
+    - 8.1.32
 
 variables:
   - &build_image woodpeckerci/plugin-docker-buildx:5.0
