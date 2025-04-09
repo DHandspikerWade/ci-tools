@@ -8,6 +8,7 @@ matrix:
 variables:
   - &build_image woodpeckerci/plugin-docker-buildx:5.0
   - &step_events [push, manual]
+  - &build_platforms [ linux/amd64 ]
 
 depends_on: 
   - base
@@ -33,7 +34,7 @@ steps:
     auto_tag: false
     tags_file: .tags
     dry_run: false
-    platforms: [linux/amd64]
+    platforms: *build_platforms
   when:
     event: *step_events
 

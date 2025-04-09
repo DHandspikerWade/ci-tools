@@ -24,7 +24,7 @@ RUN dpkg --compare-versions "$PHP_VERSION" 'gt' '8.1.0' || ( \
   && tar -xzf openssl-1.1.1u.tar.gz \
   && cd openssl-1.1.1u \
   # "Configure" has a capital letter in 1.1.1
-  && ./Configure --prefix=/opt/openssl1.1 -fPIC -shared linux-x86_64 \
+  && ./Configure --prefix=/opt/openssl1.1 -fPIC -shared linux-$(uname -p) \
   && make && make install \
   && cd / \
   && rm -r /tmp/openssl* \
