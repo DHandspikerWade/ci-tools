@@ -65,14 +65,14 @@ RUN cd /tmp/ \
 # Update PECL as it's not updated in tarballs
 && pecl channel-update pecl.php.net
 
-ARG COMPOSER_VERSION=2.5.8
+ARG COMPOSER_VERSION=2.8.8
 ENV COMPOSER_HOME /composer
 ENV PATH "/composer/vendor/bin:$PATH"
 ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer --version=${COMPOSER_VERSION}
 
-# PHPUnit
-ARG PHPUNIT_VERSION=9
+# PHPUnit (10 is highest version for all currently supported PHP versions)
+ARG PHPUNIT_VERSION=10
 RUN wget -nv https://phar.phpunit.de/phpunit-${PHPUNIT_VERSION}.phar\
 && chmod +x phpunit-${PHPUNIT_VERSION}.phar \
 && mv phpunit-${PHPUNIT_VERSION}.phar /usr/local/bin/phpunit \
