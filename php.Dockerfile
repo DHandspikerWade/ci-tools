@@ -7,7 +7,6 @@ apt-get update -q \
     mysql-client \
     libxml2-dev \
     libmcrypt-dev \
-    libssl-dev \
     libsqlite3-dev \
     libonig-dev \
     pkg-config \
