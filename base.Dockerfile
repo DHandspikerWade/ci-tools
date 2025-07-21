@@ -37,6 +37,7 @@ mkdir ~/.ssh \
     sqlite3 \
     libreadline-dev \
     libssl-dev \
+    libcurl4-openssl-dev \
 # Debian moved curl libraries causing older PHP builds to fail. (https://bugs.php.net/bug.php?id=74125) 
 && ln -s /usr/include/$(uname -p)-linux-gnu/curl /usr/include/curl \
 && rm -rf /var/lib/apt/lists/* \
