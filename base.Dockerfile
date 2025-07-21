@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y -q --no-install-recommends language-pac
 && rm -rf /var/lib/apt/lists/* \
 && mkdir -p /data
 WORKDIR /data
-ENV LC_ALL en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
 
 RUN \
 mkdir ~/.ssh \
