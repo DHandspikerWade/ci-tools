@@ -15,6 +15,8 @@ apt-get update -q \
 && rm -rf /usr/share/man/*
 
 ARG PHP_VERSION
+# Expose the download location to allow building of RC version often hosted elsewhere
+ARG PHP_DOWNLOAD_MIRROR="https://www.php.net/distributions/"
 
 # Ubuntu 22.04 switched to libssl3 but older versions of PHP need 1.1.1. It's no longer in repos so must be compiled.
 RUN dpkg --compare-versions "$PHP_VERSION" 'gt' '8.1.0' || ( \
@@ -30,7 +32,7 @@ RUN dpkg --compare-versions "$PHP_VERSION" 'gt' '8.1.0' || ( \
 )
 
 RUN cd /tmp/ \
-&& wget -nv -O php-${PHP_VERSION}.tar.gz https://www.php.net/distributions/php-${PHP_VERSION}.tar.gz \
+&& wget -nv -O php-${PHP_VERSION}.tar.gz "${PHP_DOWNLOAD_MIRROR}php-${PHP_VERSION}.tar.gz" \
 && tar -xzf php-${PHP_VERSION}.tar.gz \
 && cd /tmp/php-${PHP_VERSION} \
 && autoconf \
