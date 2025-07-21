@@ -1,6 +1,17 @@
 ARG BASE_IMAGE="handspiker2/ci-tools:base"
 FROM ${BASE_IMAGE}
 
+RUN echo "Installing dependencies" \ 
+&& apt-get update \
+&& apt-get install -y -qq --no-install-recommends \
+    libgpgme-dev \
+    libselinux1-dev \
+    libdevmapper-dev \
+    iptables \
+&& rm -rf /var/lib/apt/lists/* \
+&& rm -rf /usr/share/doc/* \
+&& rm -rf /usr/share/man/*
+
 RUN echo "Installing credentials store" \ 
 && apt-get update \
 && apt-get install -y -qq --no-install-recommends pass \

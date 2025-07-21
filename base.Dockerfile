@@ -32,12 +32,7 @@ mkdir ~/.ssh \
     apt-utils \
     software-properties-common \
     libjpeg-dev \
-    libdevmapper-dev \
     libpng-dev \
-    libc6-dev \
-    libgpgme-dev \
-    libselinux1-dev \
-    iptables \
     imagemagick \
     sqlite3 \
     libssl-dev \
