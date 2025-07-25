@@ -29,8 +29,8 @@ steps:
     repo: registry.ci.spikedhand.com/handspiker2/ci-tools
     dockerfile: php.Dockerfile
     build_args:
-      - "PHP_VERSION=${PHP_VERSION}"
-      - "BASE_IMAGE=registry.ci.spikedhand.com/handspiker2/ci-tools:base-${CI_COMMIT_SHA:0:8}-${CI_PIPELINE_NUMBER}"
+      PHP_VERSION: $PHP_VERSION
+      BASE_IMAGE: "registry.ci.spikedhand.com/handspiker2/ci-tools:base-${CI_COMMIT_SHA:0:8}-${CI_PIPELINE_NUMBER}"
     auto_tag: false
     tags_file: .tags
     dry_run: false
