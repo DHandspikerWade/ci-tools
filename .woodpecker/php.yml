@@ -6,7 +6,7 @@ matrix:
     - 8.1.33
 
 variables:
-  - &build_image woodpeckerci/plugin-docker-buildx:6
+  - &build_image woodpeckerci/plugin-docker-buildx:5.0
   - &step_events [push, manual]
   - &build_platforms [ linux/amd64 ]
 
