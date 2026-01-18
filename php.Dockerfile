@@ -65,7 +65,7 @@ RUN cd /tmp/ \
 # Update PECL as it's not updated in tarballs
 && pecl channel-update pecl.php.net
 
-ARG COMPOSER_VERSION=2.8.8
+ARG COMPOSER_VERSION=2.9.3
 ENV COMPOSER_HOME /composer
 ENV PATH "/composer/vendor/bin:$PATH"
 ENV COMPOSER_ALLOW_SUPERUSER 1
