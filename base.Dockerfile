@@ -30,6 +30,8 @@ mkdir ~/.ssh \
     git-lfs \
     build-essential \
     apt-utils \
+    # CI pipelines tend to reinstall packages repeatingly, so at least try to check for a APT cache
+    auto-apt-proxy \
     software-properties-common \
     libjpeg-dev \
     libdevmapper-dev \
