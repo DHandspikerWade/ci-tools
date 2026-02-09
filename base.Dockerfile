@@ -11,6 +11,8 @@ ENV LC_ALL en_US.UTF-8
 RUN \
 mkdir ~/.ssh \
 && apt-get update \
+# CI pipelines tend to reinstall packages repeatingly, so add tools to check for a local APT cache
+&& apt-get install -y auto-apt-proxy \
 && apt-get install -y -qq --no-install-recommends \
     gpg-agent \
     autoconf \
@@ -30,8 +32,6 @@ mkdir ~/.ssh \
     git-lfs \
     build-essential \
     apt-utils \
-    # CI pipelines tend to reinstall packages repeatingly, so at least try to check for a APT cache
-    auto-apt-proxy \
     software-properties-common \
     libjpeg-dev \
     libdevmapper-dev \
