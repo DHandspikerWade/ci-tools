@@ -19,6 +19,7 @@ mkdir ~/.ssh \
     gpg-agent \
     autoconf \
     autogen \
+    bc \
     wget \
     curl \
     rsync \
