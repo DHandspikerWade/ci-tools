@@ -23,7 +23,7 @@ RUN echo "Installing kubectl" \
 && mv ./kubectl /usr/local/bin/kubectl \
 && kubectl --help
 
-ARG DOCKER_VERSION=29.2.1
+ARG DOCKER_VERSION=29.7.2
 RUN echo "Installing docker CLI" \
 && wget -nv -O /tmp/docker.tgz https://download.docker.com/linux/static/stable/$(uname -m)/docker-${DOCKER_VERSION}.tgz \
 && cd /tmp \

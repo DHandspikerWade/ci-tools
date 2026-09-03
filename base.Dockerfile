@@ -66,6 +66,6 @@ RUN apt-get update \
 && rm -rf /usr/share/doc/* \
 && rm -rf /usr/share/man/*
 
-ARG YQ_VERSION=v4.52.4
+ARG YQ_VERSION=v4.53.6
 RUN wget -nv -O /usr/bin/yq https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_$(dpkg --print-architecture) \
 && chmod +x /usr/bin/yq
