@@ -6,8 +6,6 @@ ENV ANSIBLE_PYTHON_INTERPRETER="auto_silent"
 ENV ANSIBLE_LOCAL_TEMP=/tmp
 
 RUN apt-get update \
-&& apt-get install -y -qq --no-install-recommends software-properties-common \
-&& apt-add-repository --yes --update ppa:ansible/ansible \
 && apt-get install -y -qq --no-install-recommends ansible \
 && ansible --version \
 # prevent warning about invalid host file
