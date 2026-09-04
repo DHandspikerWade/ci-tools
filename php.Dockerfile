@@ -4,7 +4,7 @@ FROM ${BASE_IMAGE}
 RUN \
 apt-get update -q \
 && apt-get install -y -qq --no-install-recommends \
-    mysql-client \
+    default-mysql-client \
     libxml2-dev \
     libmcrypt-dev \
     libssl-dev \
@@ -16,19 +16,6 @@ apt-get update -q \
 && rm -rf /usr/share/man/*
 
 ARG PHP_VERSION
-
-# Ubuntu 22.04 switched to libssl3 but older versions of PHP need 1.1.1. It's no longer in repos so must be compiled.
-RUN dpkg --compare-versions "$PHP_VERSION" 'gt' '8.1.0' || ( \
-  cd /tmp \
-  && wget -nv -O openssl-1.1.1u.tar.gz https://www.openssl.org/source/openssl-1.1.1u.tar.gz \
-  && tar -xzf openssl-1.1.1u.tar.gz \
-  && cd openssl-1.1.1u \
-  # "Configure" has a capital letter in 1.1.1
-  && ./Configure --prefix=/opt/openssl1.1 -fPIC -shared linux-$(uname -p) \
-  && make && make install \
-  && cd / \
-  && rm -r /tmp/openssl* \
-)
 
 RUN cd /tmp/ \
 && wget -nv -O php-${PHP_VERSION}.tar.gz https://www.php.net/distributions/php-${PHP_VERSION}.tar.gz \
