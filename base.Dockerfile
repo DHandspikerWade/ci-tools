@@ -55,11 +55,19 @@ mkdir ~/.ssh \
 && rm -rf /usr/share/doc/* \
 && rm -rf /usr/share/man/*
 
+ENV NVM_DIR=/usr/local/nvm
+ENV NODE_VERSION=24
 RUN apt-get update \
-&& curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
-# python and node are basically build tools at this point
-&& apt-get install -y nodejs python3.12 python3-yaml \
-&& npm install yarn -g \
+&& apt-get install -y -q python3 python3-yaml \
+&& mkdir -p "${NVM_DIR}" \
+&& curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.7/install.sh | bash - \
+&& . "${NVM_DIR}/nvm.sh" \
+&& nvm install 24 \
+&& nvm alias default $NODE_VERSION \
+&& nvm use default \
+&& npm install -g corepack \
+&& corepack enable yarn \
+&& node -v && npm -v && yarn -v \
 && npm cache clean --force \
 && rm -rf /var/lib/apt/lists/* \
 && rm -rf /usr/share/doc/* \
