@@ -1,16 +1,17 @@
-FROM ubuntu:24.04
+FROM debian:trixie
 
 RUN apt-get update \
 # CI pipelines tend to reinstall packages repeatingly, so add tools to check for a local APT cache
 && apt-get install -y -q auto-apt-proxy \
-# Install English locale
-&& apt-get install -y -q --no-install-recommends language-pack-en-base \
 # Fixes timezone issue when python is used
-&& DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get -y -q install tzdata \
+&& DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get -y -q install tzdata locales \
+# Ensure there's proper locale. Undefined locale causes weird issues later on.
+&& export LANG=C.UTF-8 && export LC_ALL=C.UTF-8 \
+&& update-locale LANG=C.UTF-8 \
 && rm -rf /var/lib/apt/lists/* \
 && mkdir -p /data
 WORKDIR /data
-ENV LC_ALL=en_US.UTF-8
+ENV LC_ALL=C.UTF-8
 
 RUN \
 mkdir ~/.ssh \
@@ -24,10 +25,9 @@ mkdir ~/.ssh \
     curl \
     rsync \
     unzip \
-    zip \ 
+    zip \
     tar \
     dnsutils \
-    unrar \
     jq \
     pv \
     openssh-client \
@@ -35,7 +35,7 @@ mkdir ~/.ssh \
     git-lfs \
     build-essential \
     apt-utils \
-    software-properties-common \
+    # software-properties-common \ # Removed in Debian Trixie due to bugs. Revist if needed?
     libjpeg-dev \
     libdevmapper-dev \
     libpng-dev \
@@ -45,9 +45,8 @@ mkdir ~/.ssh \
     iptables \
     imagemagick \
     sqlite3 \
-    libssl-dev \
-    openssl \
     libreadline-dev \
+    openssl \
     libssl-dev \
     libcurl4-openssl-dev \
 # Debian moved curl libraries causing older PHP builds to fail. (https://bugs.php.net/bug.php?id=74125) 
