@@ -60,7 +60,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin -
 
 # PHPUnit (10 is highest version for all currently supported PHP versions)
 ARG PHPUNIT_VERSION=10
-RUN wget -nv https://phar.phpunit.de/phpunit-${PHPUNIT_VERSION}.phar\
+RUN wget -nv https://phar.phpunit.de/phpunit-${PHPUNIT_VERSION}.phar \
 && chmod +x phpunit-${PHPUNIT_VERSION}.phar \
 && mv phpunit-${PHPUNIT_VERSION}.phar /usr/local/bin/phpunit \
 && phpunit --version
